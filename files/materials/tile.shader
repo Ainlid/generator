@@ -13,16 +13,10 @@ void fragment()
 	vec2 uvs = UV;
 	uvs -= vec2(0.5);
 	uvs = abs(uvs);
-	uvs = floor(uvs * 24.0) / 24.0;
+	uvs = floor(uvs * 16.0) /16.0;
 	float noise = hash(uvs);
-	float anim = sin(TIME * 2.0);
-	anim /= 64.0;
-	noise *= 1.0 - uvs.x + anim;
-	noise *= 1.0 - uvs.y + anim;
 	noise = floor(noise * 2.0) / 2.0;
 	noise = ceil(noise);
 	ALBEDO = col.rgb;
-	EMISSION = col.rgb / 2.0;
-	ALPHA_SCISSOR = 0.5;
-	ALPHA = noise;
+	ROUGHNESS = mix(0.5, 1.0, noise);
 }
