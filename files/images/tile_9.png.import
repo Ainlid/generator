@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/hand.png-857415ec2685ab2fd60d75bc2e7383e4.stex"
+path="res://.import/tile_9.png-d872be302261caf433f9e87104a7fd2b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://files/images/hand.png"
-dest_files=[ "res://.import/hand.png-857415ec2685ab2fd60d75bc2e7383e4.stex" ]
+source_file="res://files/images/tile_9.png"
+dest_files=[ "res://.import/tile_9.png-d872be302261caf433f9e87104a7fd2b.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

@@ -12,6 +12,9 @@ var tile_mat
 var npc
 var npc_mat
 
+var portal
+var portal_mat
+
 var bg_color
 var tile_color
 var light_color
@@ -19,15 +22,18 @@ var npc_color
 
 func _ready():
 	rng = RandomNumberGenerator.new()
-	rng.randomize()
 	env = $worldenv.environment
 	tile = preload("res://files/nodes/tile_solid.tscn")
 	tile_mat = preload("res://files/materials/tile.tres")
 	npc = preload("res://files/nodes/npc.tscn")
 	npc_mat = preload("res://files/materials/npc.tres")
-	_generate()
+	portal = preload("res://files/nodes/portal.tscn")
+	portal_mat = preload("res://files/materials/portal.tres")
+	randomize()
+	_generate(randi())
 
-func _generate():
+func _generate(var rng_seed):
+	rng.seed = rng_seed
 	bg_color = Color.from_hsv(rng.randf(), 0.6, 0.5)
 	tile_color = Color.from_hsv(rng.randf(), 0.8, 0.8)
 	light_color = Color.from_hsv(rng.randf(), 0.8, 1.0)
@@ -35,6 +41,7 @@ func _generate():
 	tile_mat.set_shader_param("col", tile_color)
 	var tile_seed = Vector2(rng.randf(), rng.randf())
 	tile_mat.set_shader_param("seed", tile_seed)
+	portal_mat.set_shader_param("col", npc_color)
 	env.fog_depth_end = rng.randf_range(20.0, 100.0)
 	env.background_color = bg_color
 	env.ambient_light_color = bg_color
@@ -64,6 +71,7 @@ func _generate():
 				if npc_chance * 100.0 < 5.0:
 					var new_npc = npc.instance()
 					add_child(new_npc)
+					new_npc._set_up(rng.randi())
 					var new_npc_mat = npc_mat.duplicate()
 					var npc_seed = Vector2(rng.randf(), rng.randf())
 					new_npc_mat.set_shader_param("seed", npc_seed)
@@ -71,3 +79,9 @@ func _generate():
 					new_npc.set_surface_material(0, new_npc_mat)
 					new_npc.translation = new_tile.translation
 					new_npc.rotation.y = float(rng.randi_range(0, 3)) * PI / 2.0
+				var portal_chance = rng.randf()
+				if portal_chance * 100.0 < 1.0:
+					var new_portal = portal.instance()
+					add_child(new_portal)
+					new_portal.translation = new_tile.translation
+					new_portal.rotation.y = float(rng.randi_range(0, 3)) * PI / 2.0

@@ -25,7 +25,7 @@ far = 200.0
 
 [node name="raycast" type="RayCast" parent="pivot"]
 enabled = true
-cast_to = Vector3( 0, 0, -2 )
+cast_to = Vector3( 0, 0, -3 )
 collide_with_areas = true
 
 [node name="light" type="SpotLight" parent="pivot"]

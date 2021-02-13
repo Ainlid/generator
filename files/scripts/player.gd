@@ -55,14 +55,14 @@ func _physics_process(delta):
 		velocity.z = final_velocity.z
 	velocity = move_and_slide(velocity, Vector3.UP, true)
 
-	var object
+	var npc
 	if raycast.is_colliding():
-		object = raycast.get_collider()
+		npc = raycast.get_collider().get_parent()
 	
-	if object != null:
-		if object.is_in_group("usable"):
+	if npc != null:
+		if npc.is_in_group("npc"):
 			crosshair.show()
-			if Input.is_action_just_pressed("use") and object.has_method("_usable_action"):
-				object._usable_action()
+			if Input.is_action_just_pressed("use"):
+				npc._speak()
 	else:
 		crosshair.hide()

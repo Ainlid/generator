@@ -1,10 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://files/materials/npc.tres" type="Material" id=1]
+[ext_resource path="res://files/scripts/npc.gd" type="Script" id=2]
+[ext_resource path="res://files/fonts/braciola_ms_regular.tres" type="DynamicFont" id=3]
 
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 1.5, 1.5 )
 
-[node name="npc" type="MeshInstance"]
+[sub_resource type="BoxShape" id=2]
+
+[node name="npc" type="MeshInstance" groups=[
+"npc",
+]]
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
+script = ExtResource( 2 )
+
+[node name="area" type="Area" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
+
+[node name="cshape" type="CollisionShape" parent="area"]
+shape = SubResource( 2 )
+
+[node name="label" type="Label" parent="."]
+margin_top = 820.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_fonts/font = ExtResource( 3 )
+text = "test"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+[connection signal="timeout" from="timer" to="." method="_speak_over"]
