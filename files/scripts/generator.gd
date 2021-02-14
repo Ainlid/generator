@@ -20,6 +20,13 @@ var wall_mat
 var npc
 var npc_mat
 
+var note
+var note_mat_off
+var note_mat_on
+var pitches = [0.0, 2.0, 4.0, 5.0, 7.0, 9.0, 11.0, 12.0]
+var note_amount
+var active_notes = 0
+
 var portal
 var portal_mat
 
@@ -27,6 +34,8 @@ var bg_color
 var tile_colors = []
 var light_color
 var npc_color
+
+var label
 
 func _ready():
 	offset = grid_size / 2.0 * grid_step
@@ -40,17 +49,16 @@ func _ready():
 	wall_mat = preload("res://files/materials/wall.tres")
 	npc = preload("res://files/nodes/npc.tscn")
 	npc_mat = preload("res://files/materials/npc.tres")
+	note = preload("res://files/nodes/note.tscn")
+	note_mat_off = preload("res://files/materials/note_off.tres")
+	note_mat_on = preload("res://files/materials/note_on.tres")
 	portal = preload("res://files/nodes/portal.tscn")
 	portal_mat = preload("res://files/materials/portal.tres")
+	label = $label
 	_generate()
 
 func _generate():
-	player = player_scene.instance()
-	add_child(player)
-	player.translation.x = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
-	player.translation.y = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
-	player.translation.z = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
-	player.rotation.y = float(rng.randi_range(0, 3)) * PI / 2.0
+	_spawn_player()
 	bg_color = Color.from_hsv(rng.randf(), 0.6, 0.5)
 	var tile_color_base = Color.from_hsv(rng.randf(), 0.8, 0.8)
 	for n_col in range(4):
@@ -70,6 +78,8 @@ func _generate():
 	env.background_color = bg_color
 	env.ambient_light_color = bg_color
 	env.fog_color = bg_color
+	note_mat_off.set_shader_param("col", npc_color)
+	note_mat_on.set_shader_param("col", npc_color)
 
 	for n_x in range(grid_size):
 		for n_y in range(grid_size):
@@ -77,7 +87,16 @@ func _generate():
 				_spawn_tiles(n_x, n_y, n_z)
 	_spawn_lights()
 	_spawn_npc()
-	_spawn_portals()
+	_spawn_notes()
+	#_spawn_portals()
+
+func _spawn_player():
+	player = player_scene.instance()
+	add_child(player)
+	player.translation.x = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+	player.translation.y = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+	player.translation.z = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+	player.rotation.y = float(rng.randi_range(0, 3)) * PI / 2.0
 
 func _spawn_tiles(var x, var y, var z):
 	if x == 0 or x == grid_size - 1 or y == 0 or y == grid_size - 1 or z == 0 or z == grid_size - 1:
@@ -129,8 +148,29 @@ func _spawn_npc():
 		new_npc.translation.z = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
 		new_npc.target = player
 
+func _spawn_notes():
+	note_amount = rng.randi_range(3, 6)
+	for n_note in range(note_amount):
+		var new_note = note.instance()
+		add_child(new_note)
+		new_note.connect("activated", self, "_note_enabled")
+		pitches.shuffle()
+		new_note._set_note(pitches[0])
+		new_note.translation.x = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+		new_note.translation.y = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+		new_note.translation.z = float(rng.randi_range(inset, grid_size - inset)) * grid_step - offset
+		new_note.rotation.y = float(rng.randi_range(0, 3)) * PI / 2.0
+		new_note.rotation.x = float(rng.randi_range(0, 3)) * PI / 2.0
+		new_note.rotation.z = float(rng.randi_range(0, 3)) * PI / 2.0
+
+func _note_enabled():
+	active_notes += 1
+	label.text = "notes: " + str(active_notes) + "/" + str(note_amount) 
+	if active_notes == note_amount:
+		_spawn_portals()
+
 func _spawn_portals():
-	var amount = rng.randi_range(3, 6)
+	var amount = rng.randi_range(4, 8)
 	for n_portal in range(amount):
 		var new_portal = portal.instance()
 		add_child(new_portal)

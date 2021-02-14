@@ -1,0 +1,21 @@
+SunDog Engine / Feb 20 2020 15:57:43
+WM: initializing...
+WM: 1920 x 1017; PPI 110; lang ru_RU
+WM: flags SCALABLE MAXIMIZED 
+WM: ready
+DSOUND init...
+Found output device 0: Первичный звуковой драйвер
+Found output device 1: Динамики (Realtek High Definition Audio)
+Found output device 2: Realtek Digital Output(Optical) (Realtek High Definition Audio)
+Found output device 3: Realtek Digital Output (Realtek High Definition Audio)
+Found output device 4: Наушники гарнитуры (Headset (XBOX 360 For Windows))
+DSOUND: selected device: -1
+DSOUND thread starting...
+DSOUND play
+Stack ptr: 0
+Stack is clean
+Project length (frames): 84672
+Export time: 0.031000 sec
+SOUND: sundog_sound_deinit() begin
+SOUND: sundog_sound_deinit() end
+Max memory used: 10244438
