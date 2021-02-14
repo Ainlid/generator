@@ -22,7 +22,8 @@ void fragment()
 	noise = floor(noise * 2.0) / 2.0;
 	noise = ceil(noise);
 	ALBEDO = col.rgb;
-	EMISSION = col.rgb / 2.0;
+	float glow_anim = sin(TIME * 2.0) * 0.5 + 0.5;
+	EMISSION = mix(vec3(0.0), col.rgb, glow_anim);
 	ALPHA_SCISSOR = 0.5;
 	ALPHA = noise;
 }

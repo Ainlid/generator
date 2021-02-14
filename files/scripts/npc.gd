@@ -7,18 +7,24 @@ var subj = ["probe", "entity", "user", "automata", "operator", "node", "system",
 var verb = ["fixed", "detected", "connected", "transmitted", "corrected", "simulated", "scanned", "encoded", "decoded", "spawned", "serialized", "categorized", "inherited", "converted"]
 var adverb = ["correctly", "incorrectly", "normally", "abnormally", "urgently", "randomly", "eventually", "rarely", "frequently", "regularly", "occasionally"]
 
+var time = 0.0
+
 var message
 var label
 var timer
 
+var target
+
 func _ready():
 	rng = RandomNumberGenerator.new()
+	rng.randomize()
+	time = rng.randf_range(0.0, PI)
 	label = $label
 	timer = $timer
 	label.hide()
+	_set_up()
 
-func _set_up(var rng_seed):
-	rng.seed = rng_seed
+func _set_up():
 	subj.shuffle()
 	verb.shuffle()
 	adj.shuffle()
@@ -32,3 +38,12 @@ func _speak():
 
 func _speak_over():
 	label.hide()
+
+func _process(delta):
+	if target != null:
+		var pos = target.global_transform.origin
+		look_at(pos, Vector3.UP)
+	time += delta
+	if time > PI:
+		time = 0.0
+	translation.y = sin(time) / 2.0

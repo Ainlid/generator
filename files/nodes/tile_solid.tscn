@@ -4,12 +4,15 @@
 
 [sub_resource type="BoxShape" id=1]
 
-[node name="tile_solid" type="Spatial"]
+[node name="tile_solid" type="Spatial" groups=[
+"solid",
+]]
 
 [node name="tile_mesh" parent="." instance=ExtResource( 1 )]
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.1, 0, 0, -1.9 )
 
-[node name="sbody" type="StaticBody" parent="tile_mesh"]
+[node name="sbody" type="StaticBody" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.2, 0, 0, -2 )
 
-[node name="cshape" type="CollisionShape" parent="tile_mesh/sbody"]
+[node name="cshape" type="CollisionShape" parent="sbody"]
 shape = SubResource( 1 )

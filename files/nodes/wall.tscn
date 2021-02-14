@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://files/nodes/wall_mesh.tscn" type="PackedScene" id=1]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="wall" type="Spatial" groups=[
+"solid",
+]]
+
+[node name="wall_mesh" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1.7, 0, 0, 0, 1.7, 0, 0, 0, 1.7, 0, 0, 0 )
+
+[node name="sbody" type="StaticBody" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0 )
+
+[node name="cshape" type="CollisionShape" parent="sbody"]
+shape = SubResource( 1 )

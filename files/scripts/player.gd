@@ -22,13 +22,13 @@ func _ready():
 func _physics_process(delta):
 	dir = Vector3()
 	var basis = global_transform.basis
-	if Input.is_action_pressed("walk_forward"):
+	if Input.is_action_pressed("up"):
 		dir -= basis.z
-	if Input.is_action_pressed("walk_back"):
+	if Input.is_action_pressed("down"):
 		dir += basis.z
-	if Input.is_action_pressed("walk_left"):
+	if Input.is_action_pressed("left"):
 		dir -= basis.x
-	if Input.is_action_pressed("walk_right"):
+	if Input.is_action_pressed("right"):
 		dir += basis.x
 	dir = dir.normalized()
 
