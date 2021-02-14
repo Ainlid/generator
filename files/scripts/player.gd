@@ -2,6 +2,8 @@ extends KinematicBody
 
 onready var camera = $Pivot/Camera
 
+var active = true
+
 export var gravity = -30.0
 export var walk_speed = 8.0
 export var jump_speed = 15.0
@@ -53,7 +55,14 @@ func _physics_process(delta):
 	if !is_on_wall():
 		velocity.x = final_velocity.x
 		velocity.z = final_velocity.z
-	velocity = move_and_slide(velocity, Vector3.UP, true)
+	if active:
+		velocity = move_and_slide(velocity, Vector3.UP, true)
+
+	if Input.is_action_just_pressed("reload"):
+		get_tree().reload_current_scene()
+
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
 
 	var npc
 	if raycast.is_colliding():

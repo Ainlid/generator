@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://files/materials/portal.tres" type="Material" id=1]
 [ext_resource path="res://files/scripts/portal.gd" type="Script" id=2]
+[ext_resource path="res://files/audio/riser.wav" type="AudioStream" id=3]
 
 [sub_resource type="QuadMesh" id=1]
 
@@ -17,4 +18,11 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.1, 0, 0, 0 )
 
 [node name="cshape" type="CollisionShape" parent="area"]
 shape = SubResource( 2 )
+
+[node name="delay" type="Timer" parent="."]
+one_shot = true
+
+[node name="sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 [connection signal="body_entered" from="area" to="." method="_body_entered"]
+[connection signal="timeout" from="delay" to="." method="_timeout"]

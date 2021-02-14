@@ -12,7 +12,7 @@
 transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.1, 0, 0, -1.9 )
 
 [node name="sbody" type="StaticBody" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.2, 0, 0, -2 )
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 0.1, 0, 0, -1.9 )
 
 [node name="cshape" type="CollisionShape" parent="sbody"]
 shape = SubResource( 1 )

@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://files/scripts/player.gd" type="Script" id=1]
 [ext_resource path="res://files/nodes/crosshair.tscn" type="PackedScene" id=2]
+[ext_resource path="res://files/fonts/braciola_ms_regular.tres" type="DynamicFont" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.5
@@ -32,3 +33,14 @@ collide_with_areas = true
 light_energy = 0.5
 
 [node name="crosshair" parent="." instance=ExtResource( 2 )]
+
+[node name="Label" type="Label" parent="."]
+margin_top = 1014.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_fonts/font = ExtResource( 3 )
+text = "walk - WASD; turn - arrow keys; interact - Z"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
